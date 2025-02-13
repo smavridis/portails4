@@ -22,7 +22,14 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <poll.h>
+
+#ifndef __cplusplus
 #include <stdatomic.h>
+#else
+#include <atomic>
+typedef std::atomic<bool> atomic_bool;
+extern "C" {
+#endif
 
 #define PTL_LE_OP_PUT PTL_ME_OP_PUT
 #define PTL_LE_OP_GET PTL_ME_OP_GET
@@ -529,3 +536,7 @@ int PtlCTSet(ptl_handle_ct_t ct_handle, ptl_ct_event_t increment);
 int PtlAtomicSync();
 
 int PtlHandleIsEqual(ptl_handle_any_t handle1, ptl_handle_any_t handle2);
+
+#ifdef __cplusplus
+}
+#endif
